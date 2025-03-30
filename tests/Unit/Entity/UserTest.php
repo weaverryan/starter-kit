@@ -25,4 +25,14 @@ class UserTest extends UnitTestCase
             $user->getAvatarUrl(),
         );
     }
+
+    public function testGetEmailAddress(): void
+    {
+        $user = UserFactory::createOne([
+            'name' => 'John Smith',
+            'email' => 'john@example.com',
+        ]);
+
+        $this->assertSame('"John Smith" <john@example.com>', $user->getEmailAddress()->toString());
+    }
 }
