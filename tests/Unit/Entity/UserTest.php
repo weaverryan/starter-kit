@@ -35,4 +35,17 @@ class UserTest extends UnitTestCase
 
         $this->assertSame('"John Smith" <john@example.com>', $user->getEmailAddress()->toString());
     }
+
+    public function testVerificationRole(): void
+    {
+        $user = UserFactory::createOne();
+
+        $this->assertFalse($user->isVerified());
+        $this->assertSame(['ROLE_USER'], $user->getRoles());
+
+        $user->verify();
+
+        $this->assertSame(['ROLE_USER', 'ROLE_VERIFIED'], $user->getRoles());
+        $this->assertTrue($user->isVerified());
+    }
 }
